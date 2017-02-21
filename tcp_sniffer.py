@@ -55,7 +55,9 @@ def startSniffer():
       print ip_header.protocol
 
       if ip_header.protocol == "TCP":
-        print "Protocol: %s %s -> %s" % (ip_header.protocol, ip_header.source_address, ip_header.destination_address)
+        print "Protocol: %s %s -> %s" % (ip_header.protocol,
+                                         ip_header.source_address,
+                                         ip_header.destination_address)
 
       elif ip_header_protocol == "ICMP":
         print "Protocol: ICMP"
