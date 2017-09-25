@@ -30,7 +30,7 @@ def startServer(port):
       serviceThread.start()
 
   except Exception as e:
-    print e
+      print "[E] Error on server: %s" % e
 
 def main():
   parser = argparse.ArgumentParser("Basic TCP server")

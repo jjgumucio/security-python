@@ -11,8 +11,8 @@ def printBanner(connectionSocket, port):
     response = connectionSocket.recv(4096)
     print "[+] Banner: %s" % str(response)
 
-  except:
-    print "[+] Banner not available"
+  except Exception as e:
+      print "[E] Banner not available. Error details: %s" % e
 
 def connectScan(address, port):
   try:
@@ -21,8 +21,7 @@ def connectScan(address, port):
     print "[+] TCP port %d OPEN" % port
     printBanner(connectionSocket, port)
 
-  except Exception as e:
-    print e
+  except:
     print "[+] TCP port %d CLOSED" % port
 
   finally:
@@ -31,22 +30,21 @@ def connectScan(address, port):
 def portScan(address, ports):
   try:
     targetIp = socket.gethostbyname(address)
-  except:
-      print "[-] Error: unknown host"
-      exit(0)
+  except Exception as e:
+    print "[E] Error: unknown host. Error details: %s" % e
+    exit(0)
 
   try:
     targetName = socket.gethostbyaddr(targetIp)
     print "[+] --- Scan results for %s ---" % targetName[0]
 
-  except:
-    print "[+] --- Scan results for %s ---" % targetIp
+  except Exception as e:
+    print "[E] --- Error on scan for %s. Error details: %s. ---" % (targetIp, e)
 
   socket.setdefaulttimeout(10)
 
   for port in ports:
     connectScan(address, int(port))
-
 
 def main():
   parser = argparse.ArgumentParser("TCP client scanner")
