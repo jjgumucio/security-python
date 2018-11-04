@@ -4,13 +4,13 @@ import argparse
 import re
 
 def get_ipv4_addresses(domain):
-    """Returns a list of IPv4 address for the given domain name."""
+    """Returns a list of IPv4 addresses for the given domain name."""
     ipv4_regex = re.compile("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
     try:
         output = subprocess.run(["whois", domain], stdout=subprocess.PIPE,
                                 text=True)
         ip_addresses = re.findall(ipv4_regex, output.stdout)
-        print("Found %d IP addresses" % len(ip_addresses))
+        print("[i] Found %d IP addresses" % len(ip_addresses))
         return ip_addresses
     except Exception as e:
         print("[E] Error running 'whois' for domain %s: %s" % (domain, e))
@@ -21,7 +21,7 @@ def write_file(addresses, filename):
         with open(filename, mode="w") as file:
             for address in addresses:
                 file.write(f"""{address}\n""")
-        print("Wrote %d IP addresses on file %s" % (len(addresses), filename))
+        print("[i] Wrote %d IP addresses on file %s" % (len(addresses), filename))
     except Exception as e:
         print("[E] Error writing ip addresses to file %s: %s" % (filename, e))
 
