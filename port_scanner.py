@@ -6,10 +6,10 @@ import socket
 def printBanner(connectionSocket, port):
   try:
     if (port == 80):
-        connectionSocket.send("GET HTTP/1.1\r\n")
+        connectionSocket.send(b"GET /HTTP/1.1\r\n")
     elif (port == 21):
         connectionSocket.recv(4096)
-        connectionSocket.send("HELP\r\n")
+        connectionSocket.send(b"HELP\r\n")
     else:
       connectionSocket.sendall("\r\n")
 
@@ -53,8 +53,7 @@ def portScan(address, ports):
 
 def main():
   parser = argparse.ArgumentParser("TCP client scanner")
-  parser.add_argument("-a", "--address", type=str,
-                      help="The targets ip address", required=True)
+  parser.add_argument("-a", "--address", type=str, help="The targets ip address")
   parser.add_argument("-p", "--port", type=str,
                       help="A list of ports to scan separated by ','", required=True)
   args = parser.parse_args()
